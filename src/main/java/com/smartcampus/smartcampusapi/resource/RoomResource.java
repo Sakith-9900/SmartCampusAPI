@@ -55,25 +55,6 @@ public class RoomResource {
         return Response.ok(room).build();
     }
 
-    // PUT /api/v1/rooms/{roomId} - update room details
-    @PUT
-    @Path("/{roomId}")
-    public Response updateRoom(@PathParam("roomId") String roomId, Room updated) {
-        Room existing = roomDAO.findById(roomId);
-        if (existing == null) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("{\"error\":\"Room not found: " + roomId + "\"}")
-                    .build();
-        }
-        if (updated.getName() != null) {
-            existing.setName(updated.getName());
-        }
-        if (updated.getCapacity() > 0) {
-            existing.setCapacity(updated.getCapacity());
-        }
-        roomDAO.save(roomId, existing);
-        return Response.ok(existing).build();
-    }
 
     // DELETE /api/v1/rooms/{roomId} - delete room, blocked if sensors assigned
     @DELETE

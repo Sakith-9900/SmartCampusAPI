@@ -73,27 +73,6 @@ public class SensorResource {
         return Response.ok(sensor).build();
     }
 
-    // PUT /api/v1/sensors/{sensorId} - update sensor status/value
-    @PUT
-    @Path("/{sensorId}")
-    public Response updateSensor(@PathParam("sensorId") String sensorId, Sensor updated) {
-        Sensor existing = sensorDAO.findById(sensorId);
-        if (existing == null) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("{\"error\":\"Sensor not found: " + sensorId + "\"}")
-                    .build();
-        }
-        // Update allowed fields
-        if (updated.getStatus() != null) {
-            existing.setStatus(updated.getStatus());
-        }
-        if (updated.getType() != null) {
-            existing.setType(updated.getType());
-        }
-        existing.setCurrentValue(updated.getCurrentValue());
-        sensorDAO.save(sensorId, existing);
-        return Response.ok(existing).build();
-    }
 
     // DELETE /api/v1/sensors/{sensorId}
     @DELETE
